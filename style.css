@@ -1,0 +1,164 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+@font-face {
+    font-family: 'OutwardBorders';
+    src: url('fonts/outward-borders.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Outwardblock';
+    src: url('fonts/outward-block.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+html, body {
+    height: 100%;
+    background: black;
+}
+
+body {
+    font-family: sans-serif;
+    margin: 20px 150px;
+    color: white;
+}
+
+h1 {
+ font-family: 'OutwardBorders', serif;
+    font-size: 180pt;
+    color: blue;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-family: 'OutwardBorders', serif;
+    font-size: 30pt;
+    color: white;
+    margin-top: 10px;
+    margin-bottom: 80px;
+    text-align: center;
+}
+
+h3 {
+    font-family: sans-serif;
+    font-size: 10pt;
+    color: red;
+    text-align: center;
+}
+
+h5 {
+    font-family: sans-serif;
+    font-size: 15pt;
+    color: blue;
+    text-align: left;
+    margin-top: 16px;
+}
+
+h6 {
+    font-family: 'bitcount-mono-single', serif;
+    font-size: 15pt; 
+    color: greenyellow;
+    text-align: left;
+    margin-top: 24px;
+}
+
+summary {
+    font-family: sans-serif;
+    font-size: 13pt; 
+    color: red;
+    text-align: left;
+    cursor: pointer;
+    margin-top: 6px;
+}
+
+p {
+    line-height: 1.8;
+    margin-top: 12px;
+}
+
+li {
+    font-family: sans-serif;
+    font-size: 10pt;
+    color: ghostwhite;
+    list-style: none;
+    line-height: 1.6;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid greenyellow;
+    margin: 12px 0 8px;
+}
+
+
+.wrapper {
+    display: flex;
+    align-items: flex-start;
+    gap: 40px;
+    margin-top: 20px;
+}
+
+.left {
+    flex: 1;
+    min-width: 0;
+}
+
+
+.right {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.right img {
+    display: block;
+    max-width: 400px; 
+    width: 100%;
+    height: auto;
+}
+
+
+table, th, tr, td {
+    border: 1px white solid;
+    border-collapse: collapse;
+    color: whitesmoke;
+}
+
+
+button {
+    background-color: yellow;
+    border: 2px solid white;
+}
+
+button:hover {
+    background-color: red;
+}
+
+@media screen and (max-width: 704px) {
+    body {
+        margin: 16px;
+    }
+
+    .wrapper {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .right {
+        justify-content: flex-start;
+    }
+
+    .right img {
+        max-width: 100%;
+    }
+}
+
+
