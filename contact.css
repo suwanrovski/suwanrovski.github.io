@@ -1,6 +1,4 @@
-/* ========================================= */
-/* 1. 폰트 설정 */
-/* ========================================= */
+
 @font-face {
     font-family: "MyCircleFont"; 
     src: local("Bitcount Mono Single Book Circle"), 
@@ -30,9 +28,7 @@ img.side-shape.right { right: 0 !important; }
 h1 { font-family: 'OutwardBorders', serif; font-size: 250px; color: blue; text-align: center; margin-bottom: 20px; }
 h2 { font-family: 'OutwardBorders', serif; font-size: 50px; color: white; margin-top: 10px; margin-bottom: 50px; text-align: center; }
 
-/* ========================================= */
-/* 3. 레이아웃 (왼쪽 메뉴 + 게임 화면) */
-/* ========================================= */
+
 .wrapper { 
     display: flex; 
     align-items: flex-start; 
@@ -137,64 +133,13 @@ h2 { font-family: 'OutwardBorders', serif; font-size: 50px; color: white; margin
 /* ========================================= */
 /* (3) 말풍선 수정: 액자 밖으로 완전히 내보내기 */
 /* ========================================= */
-.dialog-area-overlay {
-    position: absolute;
-    
-    /* ▼▼▼ [핵심 수정 2] 액자 바닥을 기준으로 마이너스 값만큼 밑으로 내립니다 ▼▼▼ */
-    bottom: -60px !important; 
-    top: auto !important;
-    
-    left: 50%; 
-    transform: translateX(-50%);
-    
-    width: 80%; 
-    max-width: 500px; 
-    
-    aspect-ratio: 1799 / 584; 
-    
-    z-index: 50; 
-    pointer-events: none;
+.dialog-area-overlay,
+.dialog-area-overlay * {
+  font-family: "yoon-px-windowgothic", monospace !important;
 }
 
-/* 둥둥 떠다니는 애니메이션 */
-.dialog-float { 
-    width: 100%; height: 100%; 
-    animation: floaty 4s ease-in-out infinite; 
-}
 
-/* 배경 이미지 */
-.dialog-frame {
-    position: absolute; inset: 0;
-    background: url("https://d2w9rnfcy7mm78.cloudfront.net/41790223/original_5025d9bceb3932e7773345bf5b43e045.png?1765687174?bc=0") center / contain no-repeat;
-    filter: drop-shadow(0 0 8px rgba(255,255,255,0.8));
-}
-
-/* 텍스트 영역 */
-.dialog-inner {
-    position: absolute;
-    top: 25%; left: 10%; right: 10%; bottom: 20%;
-    display: flex; flex-direction: column; justify-content: center; text-align: center;
-    color: cyan; font-size: 14px; line-height: 1.5;
-    
-    /* [중요] 픽셀 폰트 강제 적용 */
-    font-family: "yoon-px-windowgothic", serif !important; 
-}
-
-/* [중요] UNKNOWN 이름 폰트 해결 */
-.dialog-inner .name { 
-    font-weight: bold; margin-bottom: 5px; 
-    color: cyan; 
-    /* 부모 폰트(픽셀폰트) 물려받기 */
-    font-family: inherit !important; 
-}
-.dialog-inner .dialog-text { color: white; }
-/* 애니메이션 */
-@keyframes floaty { 0% { transform: translateY(0); } 50% { transform: translateY(-5px); } 100% { transform: translateY(0); } }
-@keyframes blink { 50%{ opacity:0; } }
-.cursor { display: inline-block; width: 4px; height: 1em; background: #eaeaea; margin-left: 4px; vertical-align: bottom; animation: blink 0.9s steps(1) infinite; }
-
-/* (4) 컨트롤러 */
-/* (4) 컨트롤러 수정됨 */
+/* ... (나머지 CSS 코드는 변경 없음) ... */
 .d-pad {
     position: absolute; bottom: 30px; right: 30px; z-index: 100;
     display: grid; gap: 8px; /* 버튼 사이 간격 조금 넓힘 */
@@ -243,4 +188,73 @@ h2 { font-family: 'OutwardBorders', serif; font-size: 50px; color: white; margin
 @media screen and (max-width: 704px) {
     .wrapper { flex-direction: column; }
     body { margin: 10px; }
+}
+
+/* ============================= */
+/* 캐릭터 + 위 말풍선 (Contact) */
+/* ============================= */
+
+.contact-character-wrap{
+  position: fixed;
+  left: 50%;
+  bottom: 220px;
+  transform: translateX(-50%);
+  z-index: 1000;
+  pointer-events: auto;
+}
+
+.contact-character{
+  width: 110px;
+  height: 160px;
+
+  background-image: url('https://d2w9rnfcy7mm78.cloudfront.net/41798796/original_dc85a26ae69df8788f869a39469fff84.png?1765737313?bc=0');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  
+
+  animation: floatyChar 3s ease-in-out infinite;
+}
+
+@keyframes floatyChar{
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-10px); }
+  100% { transform: translateY(0); }
+}
+
+/* 캐릭터 위 작은 말풍선 */
+.click-bubble{
+  text-decoration: none;
+  position: absolute;
+  bottom: 170px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  padding: 6px 12px;
+  font-size: 12px;
+  background: white;
+  color: black;
+  border-radius: 12px;
+
+  font-family: "yoon-px-windowgothic", monospace;
+  white-space: nowrap;
+
+  box-shadow: 0 0 12px cyan;
+  cursor: pointer;
+}
+
+.click-bubble:active {
+    border-color: cyan;          /* 테두리 라임색 */
+    color: lime;                 /* 화살표 라임색 */
+    background: rgba(0, 255, 0, 0.2); /* 배경도 살짝 라임빛 */
+    
+    /* 라임색으로 강하게 빛나기 */
+    box-shadow: 0 0 15px lime;   
+     transform: translateX(-50%) scale(0.95);    /* 누르는 느낌으로 살짝 작아짐 */
+}
+
+@keyframes bubbleFloat{
+  0%   { transform: translateX(-50%) translateY(0); }
+  50%  { transform: translateX(-50%) translateY(-5px); }
+  100% { transform: translateX(-50%) translateY(0); }
 }

@@ -6,16 +6,28 @@
 	<meta name="description" content="HOME">
 	<meta name="keywords" content="film, video">
 	
-	<link rel="stylesheet" href="https://use.typekit.net/vyt6bhw.css">
-
-	<link rel="stylesheet" href="style.css">
+    <script>
+      (function(d) {
+        var config = {
+          kitId: 'vyt6bhw',
+          scriptTimeout: 3000,
+          async: true
+        },
+        h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='https://use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+      })(document);
+    </script>
+    <link rel="stylesheet" href="./style.css?v=2">
+    
 	<meta name="viewport" content="width=device-width, user-scalable=no">
 	<link rel="icon" type="image/png" href="">
 	<meta property="og:image" content="">
 
-
 </head>
 <body>
+    </body>
+</html>
+
+
 	   
  <h1>WAVEONFORTH</h1>
 <img class="side-shape left" src="https://d2w9rnfcy7mm78.cloudfront.net/41642382/original_b265243fba717761706a6b61e6dd35c3.png">
@@ -30,62 +42,60 @@
 	
 
 
-	<div class="wrapper"> 
-	<div class="left">
-		<h6>Artfilm</h6>
-		
+	<div class="wrapper">
+ <div class="left">
+    <!-- 왼쪽 메뉴 -->
+    <h6>Artfilm</h6>
+    <ul><li><a href="director/director.html">❇ Director</a></li></ul>
+    <ul><li><a href="assistantdirector/assistantdirector.html">❇ Assistant Director</a></li></ul>
+    <ul><li><a href="artdirector/artdirector.html">❇ Art Director</a></li></ul>
+    <ul><li><a href="dop/dop.html">❇ Director of Photography</a></li></ul>
 
-  <ul>
-    <li><a href="director/director.html">❇ Director</a></li>
-  </ul>
+    <hr class="short-line">
 
+    <h6>Music video</h6>
+    <ul><li><a href="director/director.html">❇ Director</a></li></ul>
+    <ul><li><a href="assistantdirector/assistantdirector.html">❇ Assistant Director</a></li></ul>
+    <ul><li><a href="artdirector/artdirector.html">❇ Art Director</a></li></ul>
+    <hr class="short-line">
+    
+<h6>Contact</h6>
+    
+    <ul>
+  <li><a href="contact/contact.html">Contact</a></li>
+</ul>
 
+    
 
-  
-  <ul>
-   <li><a href="assistantdirector/assistantdirector.html">❇ Assistant Director</a></li>
-  </ul>
+  </div>
 
+  <div class="main">
+    
+    <div class="game-viewport">
+        <div class="map" id="map"></div>
+        <div class="character" id="character"></div>
 
+        <div class="d-pad">
+            <button class="btn-up" id="btn-up">▲</button>
+            <button class="btn-left" id="btn-left">◀</button>
+            <button class="btn-down" id="btn-down">▼</button>
+            <button class="btn-right" id="btn-right">▶</button>
+        </div>
+    </div> 
+    <div class="dialog-area-overlay">
+         <div class="dialog-float">
+            <div class="dialog-frame">
+               <div class="dialog-inner">
+                  <div class="name">UNKNOWN</div>
+                  <div class="dialog-text">
+                     <span id="typeText"></span><span class="cursor">|</span>
+                  </div>
+               </div>
+            </div>
+         </div>
+    </div>
 
- 
-  <ul>
-    <li><a href="artdirector/artdirector.html">❇ Art Director</a></li>
-  </ul>
-
-
-  <ul>
-   <li><a href="dop/dop.html">❇ Director of Photography</a></li>
-  </ul>
-<hr class="short-line">
-
-<h6>Music video</h6>
-
- <ul>
-    <li><a href="director/director.html">❇ Director</a></li>
-  </ul>
-
-
-
-  
-  <ul>
-   <li><a href="assistantdirector/assistantdirector.html">❇ Assistant Director</a></li>
-  </ul>
-
-
-
- 
-  <ul>
-    <li><a href="artdirector/artdirector.html">❇ Art Director</a></li>
-  </ul>
-
-
-  
-
-	</div>
-</div> 
-
-	
+  </div> 
 	<!-- table>
 		<thead>
 			<th colspan="2"></th>
@@ -112,5 +122,93 @@
 
 	<footer></footer>
 
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  
+  // ==========================
+  // 1. 타자 효과 (다이얼로그)
+  // ==========================
+  const el = document.getElementById("typeText");
+  const text = "누군가의 흔적처럼 보인다. 따라가보자.";
+  const speed = 150; 
+  let i = 0;
+
+  function type() {
+    if (i < text.length) { 
+      el.textContent = text.slice(0, i + 1);
+      i++;
+      setTimeout(type, speed);
+    }
+  }
+
+  // 폰트 로딩되면 타자 시작
+  document.fonts.ready.then(() => {
+      type();
+  });
+
+
+  // ==========================
+  // 2. 지도 이동 (캐릭터는 가만히 있고 지도가 움직임)
+  // ==========================
+  const map = document.getElementById('map');
+  const char = document.getElementById('character');
+  
+  let mapX = 0;
+  let mapY = 0;
+  const moveSpeed = 20; // 이동 속도
+
+  function move(dir) {
+      switch (dir) {
+          case 'up': 
+             // 위로 가려면 지도는 아래로 내려와야 함
+             mapY += moveSpeed; 
+             break;
+          case 'down': 
+             mapY -= moveSpeed; 
+             break;
+          case 'left': 
+             // 왼쪽으로 가려면 지도는 오른쪽으로 와야 함
+             mapX += moveSpeed; 
+             char.style.transform = 'scaleX(-1)'; // 캐릭터 왼쪽 보기
+             break;
+          case 'right': 
+             mapX -= moveSpeed; 
+             char.style.transform = 'scaleX(1)'; // 캐릭터 오른쪽 보기
+             break;
+      }
+      map.style.left = mapX + 'px';
+      map.style.top = mapY + 'px';
+  }
+
+  // 키보드 입력
+  window.addEventListener('keydown', (e) => {
+      let dir = '';
+      if (e.key === 'ArrowUp') dir = 'up';
+      else if (e.key === 'ArrowDown') dir = 'down';
+      else if (e.key === 'ArrowLeft') dir = 'left';
+      else if (e.key === 'ArrowRight') dir = 'right';
+
+      if (dir) {
+          move(dir);
+          const btn = document.getElementById('btn-' + dir);
+          if(btn) {
+              btn.classList.add('active');
+              setTimeout(() => btn.classList.remove('active'), 100);
+          }
+      }
+  });
+
+  // 화면 버튼(십자키) 클릭
+  ['up', 'down', 'left', 'right'].forEach(dir => {
+      const btn = document.getElementById('btn-' + dir);
+      if(btn) {
+          ['mousedown', 'touchstart'].forEach(evt => {
+              btn.addEventListener(evt, () => move(dir));
+          });
+      }
+  });
+
+});
+</script>
 </body>
 </html>
