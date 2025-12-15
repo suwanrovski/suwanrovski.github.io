@@ -1,0 +1,260 @@
+
+@font-face {
+    font-family: "MyCircleFont"; 
+    src: local("Bitcount Mono Single Book Circle"), 
+         local("Bitcount Mono Single Light Circle"), 
+         local("Bitcount Mono Single");
+}
+@font-face {
+    font-family: "MySquareFont"; 
+    src: local("Bitcount Mono Single Book Square");
+}
+@font-face {
+    font-family: 'OutwardBorders';
+    src: url('fonts/outward-borders.ttf') format('truetype');
+}
+
+/* 2. 기본 초기화 */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; background: black; }
+body { font-family: sans-serif; margin: 20px 5%; color: white; }
+
+/* 배경 장식 */
+.side-shape { position: fixed; top: 0; height: 80vh; width: auto; z-index: -1; pointer-events: none; }
+img.side-shape.left { left: 0 !important; }
+img.side-shape.right { right: 0 !important; }
+
+/* 제목 스타일 */
+h1 { font-family: 'OutwardBorders', serif; font-size: 250px; color: blue; text-align: center; margin-bottom: 20px; }
+h2 { font-family: 'OutwardBorders', serif; font-size: 50px; color: white; margin-top: 10px; margin-bottom: 50px; text-align: center; }
+
+
+.wrapper { 
+    display: flex; 
+    align-items: flex-start; 
+    gap: 40px; 
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* 왼쪽 메뉴 */
+.wrapper .left { 
+    flex: 0 0 260px; 
+    position: relative; z-index: 20; 
+}
+.wrapper .left h6 { 
+    font-family: "MySquareFont", sans-serif !important; 
+    font-size: 20pt; color: red; 
+    margin-top: 25px; margin-bottom: 8px; 
+}
+.wrapper .left ul li { list-style: none; line-height: 1.6; }
+.wrapper .left ul li a { 
+    color: yellowgreen !important; 
+    text-decoration: none; 
+    font-family: "MyCircleFont", sans-serif; 
+    font-size: 13pt; 
+    display: inline-block; margin-top: 10px; 
+}
+.wrapper .left ul li a:hover { color: cyan !important; font-size: 16pt !important; }
+.short-line { width: 100px; border: 0; border-top: 1px solid yellowgreen; margin: 30px 0; }
+
+/* 오른쪽 메인 영역 */
+.main { flex: 1; width: 100%; }
+
+/* ========================================= */
+/* 🎮 4. 게임 화면 (여기 수정됨!) */
+/* ========================================= */
+.game-viewport {
+    width: 100%;
+    height: 380px; 
+   position: relative !important;
+    overflow: hidden; 
+    background: #000;
+    border: 1px solid #333;
+}
+/* (1) 지도 CSS 수정 */
+.map {
+    position: absolute; top: 0; left: 0;
+    
+    /* [수정 1] 배경 그림 너비에 맞춰서 맵 길이도 1900px로 변경 */
+    /* (안 그러면 캐릭터가 가다가 중간에 막힘) */
+    width: 1900px; 
+    
+    height: 100%;
+    
+    background-image: url('https://d2w9rnfcy7mm78.cloudfront.net/41801161/original_1620a233e357e191c95ceaff3bc6f5f0.png?1765747594?bc=0');
+    
+    /* [수정 2] 세로 비율 맞추기 (340px -> 855px) */
+    /* 가로가 1200->1900(약 1.58배) 됐으니, 세로도 540->855로 늘려야 정비율이 됩니다. */
+    background-size: 1900px 420px; 
+    
+    background-position: left bottom;
+    
+    transition: left 0.1s linear;
+}
+/* (2) 캐릭터 (★수정: 말풍선에 가려지지 않게 위로 올림) */
+.character {
+    position: absolute;
+    /* 바닥에서 250px 위로 올려서 말풍선 위로 오게 함 */
+    bottom: 120px; 
+    left: 100px; 
+    z-index: 10;
+    width: 100px; height: 150px;
+    background-size: contain; background-repeat: no-repeat; background-position: center;
+    background-image: url('https://d2w9rnfcy7mm78.cloudfront.net/41798796/original_dc85a26ae69df8788f869a39469fff84.png?1765737313?bc=0');
+    animation: walk-3-frames 0.6s infinite step-start;
+}
+@keyframes walk-3-frames {
+    0% { background-image: url('https://d2w9rnfcy7mm78.cloudfront.net/41798798/original_c10dfcd4da8d42654b35065dce19ecc1.png?1765737313?bc=0'); }
+    25% { background-image: url('https://d2w9rnfcy7mm78.cloudfront.net/41798796/original_dc85a26ae69df8788f869a39469fff84.png?1765737313?bc=0'); }
+    50% { background-image: url('https://d2w9rnfcy7mm78.cloudfront.net/41798797/original_e2e4c169e73d7491cae35ff1e9c2dc54.png?1765737313?bc=0'); }
+    75% { background-image: url('https://d2w9rnfcy7mm78.cloudfront.net/41798796/original_dc85a26ae69df8788f869a39469fff84.png?1765737313?bc=0'); }
+}
+
+.game-viewport {
+    width: 100%;
+    height: 380px; 
+    position: relative !important;
+    
+    /* 가로는 숨기고, 세로는 말풍선 때문에 보이게 유지 */
+    overflow-x: hidden; 
+    overflow-y: visible; 
+    
+    margin-bottom: 180px;
+
+    background: #000;
+    
+    /* ▼▼▼ [수정] 테두리 제거 ▼▼▼ */
+    border: none !important;
+}
+
+/* ... (중간 지도/캐릭터 코드는 건들지 않음) ... */
+
+/* ========================================= */
+/* (3) 말풍선 수정: 액자 밖으로 완전히 내보내기 */
+/* ========================================= */
+.dialog-area-overlay,
+.dialog-area-overlay * {
+  font-family: "yoon-px-windowgothic", monospace !important;
+}
+
+
+/* ... (나머지 CSS 코드는 변경 없음) ... */
+.d-pad {
+    position: absolute; bottom: 30px; right: 30px; z-index: 100;
+    display: grid; gap: 8px; /* 버튼 사이 간격 조금 넓힘 */
+    grid-template-areas: ". up ." "left down right";
+    
+    /* ▼▼▼ [수정] 원래 0.6이었는데 잘 보이게 0.9로 올림 ▼▼▼ */
+    opacity: 0.9; 
+    transition: opacity 0.3s;
+}
+
+.d-pad button {
+    width: 35px; height: 35px; /* 크기 살짝 키움 (터치하기 편하게) */
+    background: rgba(0, 0, 0, 0.6);
+    
+    /* ▼▼▼ [핵심 1] 상시 하얀색 테두리와 빛나는 효과(Glow) 추가 ▼▼▼ */
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.6); 
+    
+    border-radius: 5px; 
+    color: white; /* 화살표 색상 */
+    
+    cursor: pointer; display: flex; justify-content: center; align-items: center; 
+    font-size: 14px; /* 화살표 크기 키움 */
+    
+    /* 색깔이 부드럽게 변하도록 설정 */
+    transition: all 0.1s ease-in-out;
+}
+
+/* ▼▼▼ [핵심 2] 클릭하거나 터치했을 때 라임색으로 변경 ▼▼▼ */
+.d-pad button:active {
+    border-color: greenyellow;          /* 테두리 라임색 */
+    color: lime;                 /* 화살표 라임색 */
+    background: rgba(0, 255, 0, 0.2); /* 배경도 살짝 라임빛 */
+    
+    /* 라임색으로 강하게 빛나기 */
+    box-shadow: 0 0 15px lime;   
+    transform: scale(0.95);      /* 누르는 느낌으로 살짝 작아짐 */
+}
+
+/* 위치 잡기 */
+.btn-up { grid-area: up; } 
+.btn-left { grid-area: left; } 
+.btn-down { grid-area: down; } 
+.btn-right { grid-area: right; }
+/* 반응형 (모바일) */
+@media screen and (max-width: 704px) {
+    .wrapper { flex-direction: column; }
+    body { margin: 10px; }
+}
+
+/* ============================= */
+/* 캐릭터 + 위 말풍선 (Contact) */
+/* ============================= */
+
+.contact-character-wrap{
+  position: fixed;
+  left: 50%;
+  bottom: 220px;
+  transform: translateX(-50%);
+  z-index: 1000;
+  pointer-events: auto;
+}
+
+.contact-character{
+  width: 110px;
+  height: 160px;
+
+  background-image: url('https://d2w9rnfcy7mm78.cloudfront.net/41798796/original_dc85a26ae69df8788f869a39469fff84.png?1765737313?bc=0');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  
+
+  animation: floatyChar 3s ease-in-out infinite;
+}
+
+@keyframes floatyChar{
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-10px); }
+  100% { transform: translateY(0); }
+}
+
+/* 캐릭터 위 작은 말풍선 */
+.click-bubble{
+  text-decoration: none;
+  position: absolute;
+  bottom: 170px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  padding: 6px 12px;
+  font-size: 12px;
+  background: white;
+  color: black;
+  border-radius: 12px;
+
+  font-family: "yoon-px-windowgothic", monospace;
+  white-space: nowrap;
+
+  box-shadow: 0 0 12px cyan;
+  cursor: pointer;
+}
+
+.click-bubble:active {
+    border-color: cyan;          /* 테두리 라임색 */
+    color: lime;                 /* 화살표 라임색 */
+    background: rgba(0, 255, 0, 0.2); /* 배경도 살짝 라임빛 */
+    
+    /* 라임색으로 강하게 빛나기 */
+    box-shadow: 0 0 15px lime;   
+     transform: translateX(-50%) scale(0.95);    /* 누르는 느낌으로 살짝 작아짐 */
+}
+
+@keyframes bubbleFloat{
+  0%   { transform: translateX(-50%) translateY(0); }
+  50%  { transform: translateX(-50%) translateY(-5px); }
+  100% { transform: translateX(-50%) translateY(0); }
+}
